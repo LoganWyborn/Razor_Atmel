@@ -5,3 +5,8 @@ Debug/
 *.wspos
 doxygen
 EIE-Purple-Logo.jpg
+firmware_dotmatrix/iar_7_20_1/BuildLog.log
+firmware_dotmatrix/iar_7_20_1/settings/mpgl2-efmw-01.Debug.cspy.ps1
+firmware_dotmatrix/iar_7_20_1/settings/mpgl2-efmw-01.Debug.driver.xcl
+firmware_dotmatrix/iar_7_20_1/settings/mpgl2-efmw-01.Debug.general.xcl
+firmware_dotmatrix/iar_7_20_1/settings/mpgl2-efmw-01.dnx
