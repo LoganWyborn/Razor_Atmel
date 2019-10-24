@@ -99,6 +99,12 @@ void UserApp1Initialize(void)
     UserApp1_StateMachine = UserApp1SM_Error;
   }
 
+  
+  /*Advanced LED Module*/
+  LedPWM(RED0,   LED_PWM_100);
+  LedPWM(GREEN0, LED_PWM_0);
+  LedPWM(BLUE0,  LED_PWM_0);
+  
 } /* end UserApp1Initialize() */
 
   
@@ -120,6 +126,43 @@ void UserApp1RunActiveState(void)
 {
   UserApp1_StateMachine();
 
+  
+  
+   /*LED Cycling - LED Advanced Module*/
+  static LedNumberType aeCurrentLed[] = {GREEN0, RED0, BLUE0, GREEN0, RED0, BLUE0};
+  static bool abLedRateIncreasing[] = {TRUE, FALSE, TRUE, FALSE, TRUE, FALSE};
+  static u8 u8CurrentLedIndex;
+  static u8 u8CurrentLedLevel;
+  static u8 u8DutyCycleCounter;
+  static u16 u16Counter = COLOUR_CYCLE_TIME;
+
+  
+  u16Counter--;
+  if(u16Counter == 0){ /*Check if its time to change colours*/
+    u16Counter = COLOUR_CYCLE_TIME;
+    if(abLedRateIncreasing[u8CurrentLedIndex]){ /*Check if value is increasing or decreasing*/
+      u8CurrentLedLevel++;
+    }else{
+      u8CurrentLedLevel--;
+    }
+    
+    u8DutyCycleCounter++;
+      if(u8DutyCycleCounter == 20){ /*Check if light is at its maximum*/
+        u8DutyCycleCounter = 0;
+        
+        u8CurrentLedIndex++;
+        if(u8CurrentLedIndex == sizeof(aeCurrentLed)){ /*Check if we're at the end of the Array*/
+          u8CurrentLedIndex = 0;
+        }
+      }    
+      
+   /*   u8CurrentLedLevel = 20;
+      if(abLedRateIncreasing[u8CurrentLedIndex]){
+        u8CurrentLedLevel = 0;
+      } */
+      
+      LedPWM( (LedNumberType)aeCurrentLed[u8CurrentLedIndex], (LedRateType)u8CurrentLedLevel);
+  }
 } /* end UserApp1RunActiveState */
 
 
