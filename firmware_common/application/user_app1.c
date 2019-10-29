@@ -87,7 +87,7 @@ Promises:
 */
 void UserApp1Initialize(void)
 {
- 
+
   /* If good initialization, set state to Idle */
   if( 1 )
   {
@@ -98,9 +98,9 @@ void UserApp1Initialize(void)
     /* The task isn't properly initialized, so shut it down and don't run */
     UserApp1_StateMachine = UserApp1SM_Error;
   }
-
   
-  /*Advanced LED Module*/
+   
+   /*Advanced LED Module*/
   LedPWM(RED0,   LED_PWM_100);
   LedPWM(GREEN0, LED_PWM_0);
   LedPWM(BLUE0,  LED_PWM_0);
@@ -116,6 +116,7 @@ void UserApp1Initialize(void)
   LedPWM(RED3,   LED_PWM_50);
   LedPWM(GREEN3, LED_PWM_0);
   LedPWM(BLUE3,  LED_PWM_100);
+  
   
 } /* end UserApp1Initialize() */
 

@@ -85,6 +85,25 @@ void UserApp2Initialize(void)
     UserApp2_StateMachine = UserApp2SM_FailedInit;
   }
 
+  LedPWM(RED0,   LED_PWM_100);
+  LedPWM(GREEN0, LED_PWM_0);
+  LedPWM(BLUE0,  LED_PWM_0);
+  
+  LedPWM(RED1,   LED_PWM_100);
+  LedPWM(GREEN1, LED_PWM_0);
+  LedPWM(BLUE1,  LED_PWM_0);
+  
+  LedPWM(RED2,   LED_PWM_100);
+  LedPWM(GREEN2, LED_PWM_0);
+  LedPWM(BLUE2,  LED_PWM_0);
+  
+  LedPWM(RED3,   LED_PWM_100);
+  LedPWM(GREEN3, LED_PWM_0);
+  LedPWM(BLUE3,  LED_PWM_0);
+  
+  
+  
+  
 } /* end UserApp2Initialize() */
 
   
@@ -128,84 +147,96 @@ void UserApp2RunActiveState(void)
     static u8 u8DutyCycleCounter2 = 0;
     static u8 u8DutyCycleCounter3 = 0;
   static u16 u16Counter = COLOUR_CYCLE_TIME;
-  static u32 u32CycleTracker = 0;
+  static u16 u16CycleTracker = 0;
 
   
   u16Counter--;
   if(u16Counter == 0){ /*Check if its time to change colours*/
     u16Counter = COLOUR_CYCLE_TIME;
-    
-    if(abLedRateIncreasing[u8CurrentLedIndex]){ /*Check if value is increasing or decreasing*/
-      u8CurrentLedLevel++;
-    }else{
-      u8CurrentLedLevel--;
-    }
-    
-    u8DutyCycleCounter++;
-      if(u8DutyCycleCounter == 20){ /*Check if light is at its maximum*/
-        u8DutyCycleCounter = 0;
+   u16CycleTracker++;
+   
+   if(u16CycleTracker%49 ==  0){
+      if(abLedRateIncreasing[u8CurrentLedIndex]){ /*Check if value is increasing or decreasing*/
+        u8CurrentLedLevel++;
+      }else{
+        u8CurrentLedLevel--;
+      }
+     
+      u8DutyCycleCounter++;
+        if(u8DutyCycleCounter == 20){ /*Check if light is at its maximum*/
+          u8DutyCycleCounter = 0;
+          
+          u8CurrentLedIndex++;
+          if(u8CurrentLedIndex == sizeof(aeCurrentLed)){ /*Check if we're at the end of the Array*/
+            u8CurrentLedIndex = 0;
+          }
+        }    
+   }
         
-        u8CurrentLedIndex++;
-        if(u8CurrentLedIndex == sizeof(aeCurrentLed)){ /*Check if we're at the end of the Array*/
-          u8CurrentLedIndex = 0;
-        }
-      }    
-      
       /***LED1***/
-    if(abLedRateIncreasing[u8CurrentLedIndex1]){ /*Check if value is increasing or decreasing*/
-      u8CurrentLedLevel1++;
-    }else{
-      u8CurrentLedLevel1--;
-    }
-    
-    u8DutyCycleCounter1++;
-      if(u8DutyCycleCounter1 == 20){ /*Check if light is at its maximum*/
-        u8DutyCycleCounter1 = 0;
-        
-        u8CurrentLedIndex1++;
-        if(u8CurrentLedIndex1 == sizeof(aeCurrentLed)){ /*Check if we're at the end of the Array*/
-          u8CurrentLedIndex1 = 0;
-        }
-      }    
+    if(u16CycleTracker%25 ==  0){
+      if(abLedRateIncreasing[u8CurrentLedIndex1]){ /*Check if value is increasing or decreasing*/
+        u8CurrentLedLevel1++;
+      }else{
+        u8CurrentLedLevel1--;
+      }
       
-      /***LED2***/
-    if(abLedRateIncreasing[u8CurrentLedIndex2]){ /*Check if value is increasing or decreasing*/
-      u8CurrentLedLevel2++;
-    }else{
-      u8CurrentLedLevel2--;
+      u8DutyCycleCounter1++;
+        if(u8DutyCycleCounter1 == 20){ /*Check if light is at its maximum*/
+          u8DutyCycleCounter1 = 0;
+          
+          u8CurrentLedIndex1++;
+          if(u8CurrentLedIndex1 == sizeof(aeCurrentLed)){ /*Check if we're at the end of the Array*/
+            u8CurrentLedIndex1 = 0;
+          }
+        }    
     }
-    
-    u8DutyCycleCounter2++;
-      if(u8DutyCycleCounter2 == 20){ /*Check if light is at its maximum*/
-        u8DutyCycleCounter2 = 0;
-        
-        u8CurrentLedIndex2++;
-        if(u8CurrentLedIndex2 == sizeof(aeCurrentLed)){ /*Check if we're at the end of the Array*/
-          u8CurrentLedIndex2 = 0;
-        }
-      }  
+   
+      /***LED2***/
+    if(u16CycleTracker%13 ==  0){
+      if(abLedRateIncreasing[u8CurrentLedIndex2]){ /*Check if value is increasing or decreasing*/
+        u8CurrentLedLevel2++;
+      }else{
+        u8CurrentLedLevel2--;
+      }
+      
+      u8DutyCycleCounter2++;
+        if(u8DutyCycleCounter2 == 20){ /*Check if light is at its maximum*/
+          u8DutyCycleCounter2 = 0;
+          
+          u8CurrentLedIndex2++;
+          if(u8CurrentLedIndex2 == sizeof(aeCurrentLed)){ /*Check if we're at the end of the Array*/
+            u8CurrentLedIndex2 = 0;
+          }
+        }  
+    }
       
       /***LED3***/
-    if(abLedRateIncreasing[u8CurrentLedIndex3]){ /*Check if value is increasing or decreasing*/
-      u8CurrentLedLevel3++;
-    }else{
-      u8CurrentLedLevel3--;
+    if(u16CycleTracker%7 ==  0){
+      if(abLedRateIncreasing[u8CurrentLedIndex3]){ /*Check if value is increasing or decreasing*/
+        u8CurrentLedLevel3++;
+      }else{
+        u8CurrentLedLevel3--;
+      }
+      
+      u8DutyCycleCounter3++;
+        if(u8DutyCycleCounter3 == 20){ /*Check if light is at its maximum*/
+          u8DutyCycleCounter3 = 0;
+          
+          u8CurrentLedIndex3++;
+          if(u8CurrentLedIndex3 == sizeof(aeCurrentLed)){ /*Check if we're at the end of the Array*/
+            u8CurrentLedIndex3 = 0;
+          }
+        }  
     }
-    
-    u8DutyCycleCounter3++;
-      if(u8DutyCycleCounter3 == 20){ /*Check if light is at its maximum*/
-        u8DutyCycleCounter3 = 0;
-        
-        u8CurrentLedIndex3++;
-        if(u8CurrentLedIndex3 == sizeof(aeCurrentLed)){ /*Check if we're at the end of the Array*/
-          u8CurrentLedIndex3 = 0;
-        }
-      }  
       
       LedPWM( (LedNumberType)aeCurrentLed[u8CurrentLedIndex], (LedRateType)u8CurrentLedLevel);
       LedPWM( (LedNumberType)aeCurrentLed1[u8CurrentLedIndex1], (LedRateType)u8CurrentLedLevel1);
       LedPWM( (LedNumberType)aeCurrentLed2[u8CurrentLedIndex2], (LedRateType)u8CurrentLedLevel2);
       LedPWM( (LedNumberType)aeCurrentLed3[u8CurrentLedIndex3], (LedRateType)u8CurrentLedLevel3);
+      
+      if(u16CycleTracker == 15925)
+        u16CycleTracker = 0;
   }
   
 } /* end UserApp2RunActiveState */
