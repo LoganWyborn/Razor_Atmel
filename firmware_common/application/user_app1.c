@@ -100,23 +100,7 @@ void UserApp1Initialize(void)
   }
   
    
-   /*Advanced LED Module*/
-  LedPWM(RED0,   LED_PWM_100);
-  LedPWM(GREEN0, LED_PWM_0);
-  LedPWM(BLUE0,  LED_PWM_0);
-  
-  LedPWM(RED1,   LED_PWM_50);
-  LedPWM(GREEN1, LED_PWM_100);
-  LedPWM(BLUE1,  LED_PWM_0);
-  
-  LedPWM(RED2,   LED_PWM_0);
-  LedPWM(GREEN2, LED_PWM_100);
-  LedPWM(BLUE2,  LED_PWM_100);
-  
-  LedPWM(RED3,   LED_PWM_50);
-  LedPWM(GREEN3, LED_PWM_0);
-  LedPWM(BLUE3,  LED_PWM_100);
-  
+ 
   
 } /* end UserApp1Initialize() */
 
@@ -138,105 +122,6 @@ Promises:
 void UserApp1RunActiveState(void)
 {
   UserApp1_StateMachine();
-
-  
-  
-   /*LED Cycling - LED Advanced Module*/
-  static LedNumberType aeCurrentLed[] = {GREEN0, RED0, BLUE0, GREEN0, RED0, BLUE0};
-    static LedNumberType aeCurrentLed1[] = {GREEN1, RED1, BLUE1, GREEN1, RED1, BLUE1};
-    static LedNumberType aeCurrentLed2[] = {GREEN2, RED2, BLUE2, GREEN2, RED2, BLUE2};
-    static LedNumberType aeCurrentLed3[] = {GREEN3, RED3, BLUE3, GREEN3, RED3, BLUE3};
-  static bool abLedRateIncreasing[] = {TRUE, FALSE, TRUE, FALSE, TRUE, FALSE};
-  static u8 u8CurrentLedIndex = 0;
-    static u8 u8CurrentLedIndex1 = 1;
-    static u8 u8CurrentLedIndex2 = 3;
-    static u8 u8CurrentLedIndex3 = 4;
-  static u8 u8CurrentLedLevel;
-    static u8 u8CurrentLedLevel1 = 10;
-    static u8 u8CurrentLedLevel2 = 20;
-    static u8 u8CurrentLedLevel3 = 10;
-  static u8 u8DutyCycleCounter = 0;
-    static u8 u8DutyCycleCounter1 = 10;
-    static u8 u8DutyCycleCounter2 = 0;
-    static u8 u8DutyCycleCounter3 = 10;
-  static u16 u16Counter = COLOUR_CYCLE_TIME;
-
-  
-  u16Counter--;
-  if(u16Counter == 0){ /*Check if its time to change colours*/
-    u16Counter = COLOUR_CYCLE_TIME;
-    if(abLedRateIncreasing[u8CurrentLedIndex]){ /*Check if value is increasing or decreasing*/
-      u8CurrentLedLevel++;
-    }else{
-      u8CurrentLedLevel--;
-    }
-    
-    u8DutyCycleCounter++;
-      if(u8DutyCycleCounter == 20){ /*Check if light is at its maximum*/
-        u8DutyCycleCounter = 0;
-        
-        u8CurrentLedIndex++;
-        if(u8CurrentLedIndex == sizeof(aeCurrentLed)){ /*Check if we're at the end of the Array*/
-          u8CurrentLedIndex = 0;
-        }
-      }    
-      
-      /***LED1***/
-    if(abLedRateIncreasing[u8CurrentLedIndex1]){ /*Check if value is increasing or decreasing*/
-      u8CurrentLedLevel1++;
-    }else{
-      u8CurrentLedLevel1--;
-    }
-    
-    u8DutyCycleCounter1++;
-      if(u8DutyCycleCounter1 == 20){ /*Check if light is at its maximum*/
-        u8DutyCycleCounter1 = 0;
-        
-        u8CurrentLedIndex1++;
-        if(u8CurrentLedIndex1 == sizeof(aeCurrentLed)){ /*Check if we're at the end of the Array*/
-          u8CurrentLedIndex1 = 0;
-        }
-      }    
-      
-      /***LED2***/
-    if(abLedRateIncreasing[u8CurrentLedIndex2]){ /*Check if value is increasing or decreasing*/
-      u8CurrentLedLevel2++;
-    }else{
-      u8CurrentLedLevel2--;
-    }
-    
-    u8DutyCycleCounter2++;
-      if(u8DutyCycleCounter2 == 20){ /*Check if light is at its maximum*/
-        u8DutyCycleCounter2 = 0;
-        
-        u8CurrentLedIndex2++;
-        if(u8CurrentLedIndex2 == sizeof(aeCurrentLed)){ /*Check if we're at the end of the Array*/
-          u8CurrentLedIndex2 = 0;
-        }
-      }  
-      
-      /***LED3***/
-    if(abLedRateIncreasing[u8CurrentLedIndex3]){ /*Check if value is increasing or decreasing*/
-      u8CurrentLedLevel3++;
-    }else{
-      u8CurrentLedLevel3--;
-    }
-    
-    u8DutyCycleCounter3++;
-      if(u8DutyCycleCounter3 == 20){ /*Check if light is at its maximum*/
-        u8DutyCycleCounter3 = 0;
-        
-        u8CurrentLedIndex3++;
-        if(u8CurrentLedIndex3 == sizeof(aeCurrentLed)){ /*Check if we're at the end of the Array*/
-          u8CurrentLedIndex3 = 0;
-        }
-      }  
-      
-      LedPWM( (LedNumberType)aeCurrentLed[u8CurrentLedIndex], (LedRateType)u8CurrentLedLevel);
-      LedPWM( (LedNumberType)aeCurrentLed1[u8CurrentLedIndex1], (LedRateType)u8CurrentLedLevel1);
-      LedPWM( (LedNumberType)aeCurrentLed2[u8CurrentLedIndex2], (LedRateType)u8CurrentLedLevel2);
-      LedPWM( (LedNumberType)aeCurrentLed3[u8CurrentLedIndex3], (LedRateType)u8CurrentLedLevel3);
-  }
 } /* end UserApp1RunActiveState */
 
 

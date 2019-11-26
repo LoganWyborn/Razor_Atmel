@@ -95,8 +95,8 @@ void main(void)
     AntRunActiveState();
 
     /* Applications */
-  //  UserApp1RunActiveState();
-  //  UserApp2RunActiveState();
+    UserApp1RunActiveState();
+    UserApp2RunActiveState();
     UserApp3RunActiveState();
         
     /* System sleep*/
