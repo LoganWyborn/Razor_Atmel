@@ -84,26 +84,6 @@ void UserApp2Initialize(void)
     /* The task isn't properly initialized, so shut it down and don't run */
     UserApp2_StateMachine = UserApp2SM_FailedInit;
   }
-
-  LedPWM(RED0,   LED_PWM_100);
-  LedPWM(GREEN0, LED_PWM_0);
-  LedPWM(BLUE0,  LED_PWM_0);
-  
-  LedPWM(RED1,   LED_PWM_100);
-  LedPWM(GREEN1, LED_PWM_0);
-  LedPWM(BLUE1,  LED_PWM_0);
-  
-  LedPWM(RED2,   LED_PWM_100);
-  LedPWM(GREEN2, LED_PWM_0);
-  LedPWM(BLUE2,  LED_PWM_0);
-  
-  LedPWM(RED3,   LED_PWM_100);
-  LedPWM(GREEN3, LED_PWM_0);
-  LedPWM(BLUE3,  LED_PWM_0);
-  
-  
-  
-  
 } /* end UserApp2Initialize() */
 
   
@@ -124,8 +104,6 @@ Promises:
 void UserApp2RunActiveState(void)
 {
   UserApp2_StateMachine();
-
-  
 } /* end UserApp2RunActiveState */
 
 
