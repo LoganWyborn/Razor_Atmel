@@ -138,7 +138,20 @@ State Machine Function Definitions
 /* Wait for ??? */
 static void UserApp1SM_Idle(void)
 {
-
+  static u16 u16GameTimer = 0;
+  static u8 u8CurrentState = 0;
+  
+  
+  
+  if(u8CurrentState == 0)
+  {
+    
+  }
+  
+  
+  
+  
+  
 } /* end UserApp1SM_Idle() */
     
 
