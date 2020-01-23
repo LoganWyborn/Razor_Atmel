@@ -128,7 +128,15 @@ void UserApp1RunActiveState(void)
 /*--------------------------------------------------------------------------------------------------------------------*/
 /* Private functions                                                                                                  */
 /*--------------------------------------------------------------------------------------------------------------------*/
-
+static void displayMainMenu(u16 highScore)
+{
+  static pixelAddressType sStartPixel;
+  sStartPixel = {LCD_LEFT_MOST_COLUMN, LCD_SMALL_FONT_LINE2};
+  
+  LcdClearScreen();
+  LcdLoadString("     Welcome To :", LCD_FONT_SMALL, sStartPixel); 
+  
+}
 
 /**********************************************************************************************************************
 State Machine Function Definitions
@@ -140,12 +148,13 @@ static void UserApp1SM_Idle(void)
 {
   static u16 u16GameTimer = 0;
   static u8 u8CurrentState = 0;
+  static u16 u16HighScore = 0;
   
   
   
-  if(u8CurrentState == 0)
+  if(u8CurrentState == 0) /* MAIN MENU STATE */
   {
-    
+    displayMainMenu(u16HighScore);
   }
   
   
