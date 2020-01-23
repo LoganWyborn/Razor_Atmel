@@ -24,6 +24,24 @@ Header file for user_app1.c
 Type Definitions
 **********************************************************************************************************************/
 
+typedef struct
+{
+  u8 u8XPosition; 
+  u8 u8YPosition;
+  u8 u8Direction;
+  i8 i8XSpeed;
+  i8 i8YSpeed;
+  u8 u8Size;
+} tRockObject;
+
+typedef struct
+{
+  u8 u8XPosition;
+  u8 u8YPosition;
+  u8 u8LivesRemaining;
+  i8 i8XSpeed;
+  i8 i8YSpeed;
+}tPlayerObject
 
 /**********************************************************************************************************************
 Constants / Definitions

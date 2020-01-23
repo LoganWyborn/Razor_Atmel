@@ -130,16 +130,18 @@ void UserApp1RunActiveState(void)
 /*--------------------------------------------------------------------------------------------------------------------*/
 static void displayMainMenu(u16 highScore)
 {
-  static PixelAddressType sStartPixel;
-  sStartPixel = {LCD_LEFT_MOST_COLUMN, LCD_SMALL_FONT_LINE2};
+  static PixelAddressType sStartPixel = {LCD_SMALL_FONT_LINE2, LCD_LEFT_MOST_COLUMN};
+  static u8 au8HighScore[11];
+  NumberToAscii(highScore, au8HighScore);
   
   LcdClearScreen();
-  LcdLoadString("     Welcome To :", LCD_FONT_SMALL, sStartPixel); 
+  LcdLoadString("    Welcome To :", LCD_FONT_SMALL, &sStartPixel); 
   sStartPixel.u16PixelRowAddress = LCD_SMALL_FONT_LINE3;
-  LcdLoadString(" SPACE GAME", LCD_FONT_BIG, sStartPixel);
-  sStartPixel.u16PixelRowAddress =LCD_SMALL_FONT_LINE6;
-  LcdLoadString("High Score : ", LCD_FONT_SMALL, sStartPixel);
-  
+  LcdLoadString("   *SPACE++ROCKS*", LCD_FONT_SMALL, &sStartPixel);
+  sStartPixel.u16PixelRowAddress = LCD_SMALL_FONT_LINE6;
+  LcdLoadString("High Score : ", LCD_FONT_SMALL, &sStartPixel);
+  sStartPixel.u16PixelRowAddress = LCD_SMALL_FONT_LINE7;
+  LcdLoadString(au8HighScore, LCD_FONT_SMALL, &sStartPixel);
 }
 
 /**********************************************************************************************************************
@@ -150,20 +152,29 @@ State Machine Function Definitions
 /* Wait for ??? */
 static void UserApp1SM_Idle(void)
 {
-  static u16 u16GameTimer = 0;
+  static u32 u32GameTimer = 0;
   static u8 u8CurrentState = 0;
   static u16 u16HighScore = 0;
-  
+  static bool bDisplayUpdate = TRUE;
+  static u8 u8GameSpeedMultiplier = 1;
   
   
   if(u8CurrentState == 0) /* MAIN MENU STATE */
   {
-    displayMainMenu(u16HighScore);
+    if(bDisplayUpdate)
+    {
+      displayMainMenu(u16HighScore);
+      bDisplayUpdate = FALSE;
+    }
+    if(WasButtonPressed(BUTTON0))
+    {
+      ButtonAcknowledge(BUTTON0);
+      u8CurrentState = 1;
+    }
+  }else if(u8CurrentState == 1) /* Initialize Game */
+  {
+    
   }
-  
-  
-  
-  
   
 } /* end UserApp1SM_Idle() */
     
