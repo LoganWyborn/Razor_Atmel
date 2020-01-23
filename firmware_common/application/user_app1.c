@@ -162,6 +162,8 @@ static void UserApp1SM_Idle(void)
   static u16 u16HighScore = 0;
   static bool bDisplayUpdate = TRUE;
   static u8 u8GameSpeedMultiplier = 1;
+  static PixelAddressType sTargetPixel = {0, 0};
+  static u8 i; /* Iterator variable for loops */
   
   //Object Declarations
   static tPlayerObject sPlayer;
@@ -225,7 +227,28 @@ static void UserApp1SM_Idle(void)
     }
     if(bDisplayUpdate) /* Generate Game Display */
     {
-      /* Filler Comment */
+      LcdClearScreen();
+      
+      //Draw a border around the gameplay area
+      sTargetPixel.u16PixelColumnAddress = 3;
+      sTargetPixel.u16PixelRowAddress = 3;
+      for(i = 4; i <= 60; i++)
+      {
+        LcdSetPixel(&sTargetPixel);
+        sTargetPixel.u16PixelColumnAddress = i;
+      }
+      for(i = 
+      
+      
+      //Draw all active rock objects
+      
+      
+      //Draw player
+      
+      
+      //Write score, life information maybe game speed?
+      
+      
     }
     
   }
