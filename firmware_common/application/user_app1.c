@@ -167,24 +167,34 @@ static void UserApp1SM_Idle(void)
   static tPlayerObject sPlayer;
   static tRockObject sRockObject0;
   sRockObject0.u8Size = 5;
+  sRockObject0.u8SpeedFactor = 0.5;
   static tRockObject sRockObject1;
   sRockObject1.u8Size = 4;
+  sRockObject1.u8SpeedFactor = 1;
   static tRockObject sRockObject2;
   sRockObject2.u8Size = 4;
+  sRockObject2.u8SpeedFactor = 1.3;
   static tRockObject sRockObject3;
   sRockObject3.u8Size = 3;
+  sRockObject3.u8SpeedFactor = 1.2;
   static tRockObject sRockObject4;
   sRockObject4.u8Size = 3;
+  sRockObject4.u8SpeedFactor = 1.3;
   static tRockObject sRockObject5;
   sRockObject5.u8Size = 3;
+  sRockObject5.u8SpeedFactor = 1.4;
   static tRockObject sRockObject6;
   sRockObject6.u8Size = 2;
+  sRockObject6.u8SpeedFactor = 1.5;
   static tRockObject sRockObject7;
   sRockObject7.u8Size = 2;
+  sRockObject7.u8SpeedFactor = 1.5;
   static tRockObject sRockObject8;
   sRockObject8.u8Size = 2;
+  sRockObject8.u8SpeedFactor = 2;
   static tRockObject sRockObject9;
   sRockObject9.u8Size = 2;
+  sRockObject9.u8SpeedFactor = 2;
   static bool abDoesRockExist[10];  
   
   if(u8CurrentState == 0) /* MAIN MENU STATE */
@@ -204,6 +214,20 @@ static void UserApp1SM_Idle(void)
     for(u8 i = 0; i < 10; i++)
       abDoesRockExist[i] = TRUE;
     bDisplayUpdate = TRUE;
+    CapTouchOn();
+    u8CurrentState = 2;
+  }else if(u8CurrentState == 2) /* Gamelay Time!! */
+  {
+    u32GameTimer++;
+    if(u32GameTimer % 30 == 0)
+    {
+      bDisplayUpdate = TRUE;
+    }
+    if(bDisplayUpdate) /* Generate Game Display */
+    {
+      /* Filler Comment */
+    }
+    
   }
   
 } /* end UserApp1SM_Idle() */

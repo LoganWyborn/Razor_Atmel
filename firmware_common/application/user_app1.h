@@ -29,6 +29,7 @@ typedef struct
   u8 u8XPosition; 
   u8 u8YPosition;
   u8 u8Direction;
+  u8 u8SpeedFactor;
   i8 i8XSpeed;
   i8 i8YSpeed;
   u8 u8Size;
