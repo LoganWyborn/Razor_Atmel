@@ -169,34 +169,34 @@ static void UserApp1SM_Idle(void)
   static tPlayerObject sPlayer;
   static tRockObject sRockObject0;
   sRockObject0.u8Size = 5;
-  sRockObject0.u8SpeedFactor = 0.5;
+  sRockObject0.fSpeedFactor = 0.5;
   static tRockObject sRockObject1;
   sRockObject1.u8Size = 4;
-  sRockObject1.u8SpeedFactor = 1;
+  sRockObject1.fSpeedFactor = 1;
   static tRockObject sRockObject2;
   sRockObject2.u8Size = 4;
-  sRockObject2.u8SpeedFactor = 1.3;
+  sRockObject2.fSpeedFactor = 1.3;
   static tRockObject sRockObject3;
   sRockObject3.u8Size = 3;
-  sRockObject3.u8SpeedFactor = 1.2;
+  sRockObject3.fSpeedFactor = 1.2;
   static tRockObject sRockObject4;
   sRockObject4.u8Size = 3;
-  sRockObject4.u8SpeedFactor = 1.3;
+  sRockObject4.fSpeedFactor = 1.3;
   static tRockObject sRockObject5;
   sRockObject5.u8Size = 3;
-  sRockObject5.u8SpeedFactor = 1.4;
+  sRockObject5.fSpeedFactor = 1.4;
   static tRockObject sRockObject6;
   sRockObject6.u8Size = 2;
-  sRockObject6.u8SpeedFactor = 1.5;
+  sRockObject6.fSpeedFactor = 1.5;
   static tRockObject sRockObject7;
   sRockObject7.u8Size = 2;
-  sRockObject7.u8SpeedFactor = 1.5;
+  sRockObject7.fSpeedFactor = 1.5;
   static tRockObject sRockObject8;
   sRockObject8.u8Size = 2;
-  sRockObject8.u8SpeedFactor = 2;
+  sRockObject8.fSpeedFactor = 2;
   static tRockObject sRockObject9;
   sRockObject9.u8Size = 2;
-  sRockObject9.u8SpeedFactor = 2;
+  sRockObject9.fSpeedFactor = 2;
   static bool abDoesRockExist[10];  
   
   if(u8CurrentState == 0) /* MAIN MENU STATE */
@@ -234,14 +234,26 @@ static void UserApp1SM_Idle(void)
       sTargetPixel.u16PixelRowAddress = 3;
       for(i = 4; i <= 60; i++)
       {
+        sTargetPixel.u16PixelRowAddress = 3;
+        LcdSetPixel(&sTargetPixel);
+        sTargetPixel.u16PixelRowAddress = 124;
         LcdSetPixel(&sTargetPixel);
         sTargetPixel.u16PixelColumnAddress = i;
       }
-      for(i = 
-      
+      for(i = 4; i < 127; i++)
+      {
+        sTargetPixel.u16PixelColumnAddress = 3;
+        LcdSetPixel(&sTargetPixel);
+        sTargetPixel.u16PixelColumnAddress = 60;
+        LcdSetPixel(&sTargetPixel);
+        sTargetPixel.u16PixelRowAddress = i;
+      }
       
       //Draw all active rock objects
-      
+      if(abDoesRockExist[0])
+      {
+        
+      }else if(
       
       //Draw player
       
