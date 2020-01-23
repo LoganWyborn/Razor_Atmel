@@ -130,11 +130,15 @@ void UserApp1RunActiveState(void)
 /*--------------------------------------------------------------------------------------------------------------------*/
 static void displayMainMenu(u16 highScore)
 {
-  static pixelAddressType sStartPixel;
+  static PixelAddressType sStartPixel;
   sStartPixel = {LCD_LEFT_MOST_COLUMN, LCD_SMALL_FONT_LINE2};
   
   LcdClearScreen();
   LcdLoadString("     Welcome To :", LCD_FONT_SMALL, sStartPixel); 
+  sStartPixel.u16PixelRowAddress = LCD_SMALL_FONT_LINE3;
+  LcdLoadString(" SPACE GAME", LCD_FONT_BIG, sStartPixel);
+  sStartPixel.u16PixelRowAddress =LCD_SMALL_FONT_LINE6;
+  LcdLoadString("High Score : ", LCD_FONT_SMALL, sStartPixel);
   
 }
 
