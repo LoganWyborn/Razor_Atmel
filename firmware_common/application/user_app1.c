@@ -144,6 +144,11 @@ static void displayMainMenu(u16 highScore)
   LcdLoadString(au8HighScore, LCD_FONT_SMALL, &sStartPixel);
 }
 
+static void rockInitialize(tRockObject tTargetRock)
+{
+  
+}
+
 /**********************************************************************************************************************
 State Machine Function Definitions
 **********************************************************************************************************************/
@@ -158,6 +163,29 @@ static void UserApp1SM_Idle(void)
   static bool bDisplayUpdate = TRUE;
   static u8 u8GameSpeedMultiplier = 1;
   
+  //Object Declarations
+  static tPlayerObject sPlayer;
+  static tRockObject sRockObject0;
+  sRockObject0.u8Size = 5;
+  static tRockObject sRockObject1;
+  sRockObject1.u8Size = 4;
+  static tRockObject sRockObject2;
+  sRockObject2.u8Size = 4;
+  static tRockObject sRockObject3;
+  sRockObject3.u8Size = 3;
+  static tRockObject sRockObject4;
+  sRockObject4.u8Size = 3;
+  static tRockObject sRockObject5;
+  sRockObject5.u8Size = 3;
+  static tRockObject sRockObject6;
+  sRockObject6.u8Size = 2;
+  static tRockObject sRockObject7;
+  sRockObject7.u8Size = 2;
+  static tRockObject sRockObject8;
+  sRockObject8.u8Size = 2;
+  static tRockObject sRockObject9;
+  sRockObject9.u8Size = 2;
+  static bool abDoesRockExist[10];  
   
   if(u8CurrentState == 0) /* MAIN MENU STATE */
   {
@@ -173,7 +201,9 @@ static void UserApp1SM_Idle(void)
     }
   }else if(u8CurrentState == 1) /* Initialize Game */
   {
-    
+    for(u8 i = 0; i < 10; i++)
+      abDoesRockExist[i] = TRUE;
+    bDisplayUpdate = TRUE;
   }
   
 } /* end UserApp1SM_Idle() */
