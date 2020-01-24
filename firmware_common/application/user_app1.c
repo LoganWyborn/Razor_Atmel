@@ -152,6 +152,61 @@ static void rockDraw(tRockObject sTargetRock)
       LcdSetPixel(k, j);
 }
 
+static void rockSelector(bool *abExists, tRockObject sRock0, tRockObject sRock1, tRockObject sRock2, tRockObject sRock3,
+                         tRockObject sRock4, tRockObject sRock5, tRockObject sRock6, tRockObject sRock7, 
+                         tRockObject sRock8, tRockObject sRock9)
+{
+  static u8 u8SelectedRock;
+  u8SelectedRock = rand() % 10;
+  if(!abExists[u8SelectedRock]) /* If it doesn't already exist, make it exist. */
+  {
+    abExists[u8SelectedRock] = TRUE;
+    
+    if(u8SelectedRock == 0)
+      rockInitializer(sRock0);
+    else if(u8SelectedRock == 1)
+      rockIntializer(sRock1);
+    else if(u8SelectedRock == 2)
+      rockIntializer(sRock2);
+    else if(u8SelectedRock == 3)
+      rockIntializer(sRock3);
+    else if(u8SelectedRock == 4)
+      rockIntializer(sRock4);
+    else if(u8SelectedRock == 5)
+      rockIntializer(sRock5);
+    else if(u8SelectedRock == 6)
+      rockIntializer(sRock6);
+    else if(u8SelectedRock == 7)
+      rockIntializer(sRock7);
+    else if(u8SelectedRock == 8)
+      rockIntializer(sRock8);
+    else if(u8SelectedRock == 9)
+      rockIntializer(sRock9);
+  }
+}
+
+static void rockInitializer(tRockObject sTargetRock)
+{
+  static u8 u8StartingSide = (rand() % 4);
+  if(u8StartingSide == 0)       //Start on TOP
+  {
+    sTargetRock.u8Direction  = ((rand() % 7) + 5);
+      
+  }else if(u8StartingSide == 1) //Start on LEFT
+  {
+    sTargetRock.u8Direction  = ((rand() % 7) + 9);
+    
+  }else if(u8StartingSide == 2) //Start on BOTTOM
+  {
+    /* MUST differentiate directions 13-15 from 0-3 */
+    
+  }else                         //Start on RIGHT
+  {
+    sTargetRock.u8Direction  = ((rand() % 7) + 1);
+    
+  }
+}
+       
 /**********************************************************************************************************************
 State Machine Function Definitions
 **********************************************************************************************************************/
@@ -217,6 +272,7 @@ static void UserApp1SM_Idle(void)
     }
   }else if(u8CurrentState == 1) /* Initialize Game */
   {
+    srand(G_u32SystemTime1ms);
     for(u8 i = 0; i < 10; i++)
       abDoesRockExist[i] = FALSE;
     bDisplayUpdate = TRUE;
@@ -305,6 +361,13 @@ static void UserApp1SM_Idle(void)
       
      bDisplayUpdate = FALSE; 
     } /* END OF GENERATE DISPLAY */
+    
+    if((u32GameTimer % 200) == 0||u32GameTimer < 5)/* Attempt to generate a rock */
+    {
+      rockSelector();  
+    }
+    
+    
     
   }else if(u8CurrentState == 3) /* Update High Score and pass back to S0 */
   {
