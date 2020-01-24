@@ -144,9 +144,12 @@ static void displayMainMenu(u16 highScore)
   LcdLoadString(au8HighScore, LCD_FONT_SMALL, &sStartPixel);
 }
 
-static void rockInitialize(tRockObject tTargetRock)
+static void rockDraw(tRockObject sTargetRock)
 {
-  
+  static u8 j, k;
+  for(j = sTargetRock.u8XPosition; j < (sTargetRock.u8XPosition + sTargetRock.u8Size); j++)
+    for(k = sTargetRock.u8YPosition; k < (sTargetRock.u8YPosition + sTargetRock.u8Size); k++)
+      LcdSetPixel(k, j);
 }
 
 /**********************************************************************************************************************
@@ -160,6 +163,7 @@ static void UserApp1SM_Idle(void)
   static u32 u32GameTimer = 0;
   static u8 u8CurrentState = 0;
   static u16 u16HighScore = 0;
+  static u16 u16CurrentScore;
   static bool bDisplayUpdate = TRUE;
   static u8 u8GameSpeedMultiplier = 1;
   static PixelAddressType sTargetPixel = {0, 0};
@@ -199,7 +203,7 @@ static void UserApp1SM_Idle(void)
   sRockObject9.fSpeedFactor = 2;
   static bool abDoesRockExist[10];  
   
-  if(u8CurrentState == 0) /* MAIN MENU STATE */
+  if(u8CurrentState == 0) /* MAIN MENU STATE ------------------------------------------------------ */
   {
     if(bDisplayUpdate)
     {
@@ -214,17 +218,20 @@ static void UserApp1SM_Idle(void)
   }else if(u8CurrentState == 1) /* Initialize Game */
   {
     for(u8 i = 0; i < 10; i++)
-      abDoesRockExist[i] = TRUE;
+      abDoesRockExist[i] = FALSE;
     bDisplayUpdate = TRUE;
+    u16CurrentScore = 0;
     CapTouchOn();
     u8CurrentState = 2;
   }else if(u8CurrentState == 2) /* Gamelay Time!! */
   {
+    //Timer Functions
     u32GameTimer++;
     if(u32GameTimer % 30 == 0)
     {
       bDisplayUpdate = TRUE;
     }
+    
     if(bDisplayUpdate) /* Generate Game Display */
     {
       LcdClearScreen();
@@ -252,17 +259,57 @@ static void UserApp1SM_Idle(void)
       //Draw all active rock objects
       if(abDoesRockExist[0])
       {
-        
-      }else if(
+        rockDraw(sRockObject0);
+      }
+      if(abDoesRockExist[1])
+      {
+        rockDraw(sRockObject1);
+      }
+      if(abDoesRockExist[2])
+      {
+        rockDraw(sRockObject2);
+      }
+      if(abDoesRockExist[3])
+      {
+        rockDraw(sRockObject3);
+      }
+      if(abDoesRockExist[4])
+      {
+        rockDraw(sRockObject4);
+      }
+      if(abDoesRockExist[5])
+      {
+        rockDraw(sRockObject5);
+      }
+      if(abDoesRockExist[6])
+      {
+        rockDraw(sRockObject6);
+      }
+      if(abDoesRockExist[7])
+      {
+        rockDraw(sRockObject7);
+      }
+      if(abDoesRockExist[8])
+      {
+        rockDraw(sRockObject8);
+      }
+      if(abDoesRockExist[9])
+      {
+       rockDraw(sRockObject9); 
+      }
       
       //Draw player
       
       
       //Write score, life information maybe game speed?
       
-      
-    }
+     bDisplayUpdate = FALSE; 
+    } /* END OF GENERATE DISPLAY */
     
+  }else if(u8CurrentState == 3) /* Update High Score and pass back to S0 */
+  {
+    if(u16CurrentScore > u16HighScore)
+      u16HighScore = u16CurrentScore;
   }
   
 } /* end UserApp1SM_Idle() */
