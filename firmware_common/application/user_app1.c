@@ -187,6 +187,7 @@ static void rockSelector(bool *abExists, tRockObject sRock0, tRockObject sRock1,
 
 static void rockInitializer(tRockObject sTargetRock)
 {
+  u8 u8Temp;
   static u8 u8StartingSide = (rand() % 4);
   if(u8StartingSide == 0)       //Start on TOP
   {
@@ -199,12 +200,72 @@ static void rockInitializer(tRockObject sTargetRock)
   }else if(u8StartingSide == 2) //Start on BOTTOM
   {
     /* MUST differentiate directions 13-15 from 0-3 */
+    u8Temp = ((rand() % 7) + 13);
+    if(u8Temp > 15)
+      u8Temp -= 16;
+    sTargetRock.u8Direction = u8Temp;
     
   }else                         //Start on RIGHT
   {
     sTargetRock.u8Direction  = ((rand() % 7) + 1);
+  }/* End of diretion selector */
+  
+  if(sTargetRock.u8Direction == 0)
+  {
     
   }
+  
+}
+
+static void rockActiveCheck(bool *abExists, tRockObject sRock0, tRockObject sRock1, tRockObject sRock2,
+                       tRockObject sRock3, tRockObject sRock4, tRockObject sRock5, tRockObject sRock6,
+                       tRockObject sRock7, tRockObject sRock8, tRockObject sRock9)
+{
+  if(abExists[0])
+  {
+    rockMovement(sRock0);
+  }
+  if(abExists[1])
+  {
+    rockMovement(sRock1);
+  }
+  if(abExists[2])
+  {
+    rockMovement(sRock2);
+  }
+  if(abExists[3])
+  {
+    rockMovement(sRock3);
+  }
+  if(abExists[4])
+  {
+    rockMovement(sRock4);
+  }
+  if(abExists[5])
+  {
+    rockMovement(sRock5);
+  }
+  if(abExists[6])
+  {
+    rockMovement(sRock6);
+  }
+  if(abExists[7])
+  {
+    rockMovement(sRock7);
+  }
+  if(abExists[8])
+  {
+    rockMovement(sRock8);
+  }
+  if(abExists[9])
+  {
+    rockMovement(sRock9);
+  }
+}
+
+static void rockMovement(tRockObject sTargetRock)
+{
+  
 }
        
 /**********************************************************************************************************************
@@ -256,6 +317,7 @@ static void UserApp1SM_Idle(void)
   static tRockObject sRockObject9;
   sRockObject9.u8Size = 2;
   sRockObject9.fSpeedFactor = 2;
+  
   static bool abDoesRockExist[10];  
   
   if(u8CurrentState == 0) /* MAIN MENU STATE ------------------------------------------------------ */
@@ -270,7 +332,7 @@ static void UserApp1SM_Idle(void)
       ButtonAcknowledge(BUTTON0);
       u8CurrentState = 1;
     }
-  }else if(u8CurrentState == 1) /* Initialize Game */
+  }else if(u8CurrentState == 1) /* Initialize Game ------------------------------------------------ */
   {
     srand(G_u32SystemTime1ms);
     for(u8 i = 0; i < 10; i++)
@@ -279,7 +341,7 @@ static void UserApp1SM_Idle(void)
     u16CurrentScore = 0;
     CapTouchOn();
     u8CurrentState = 2;
-  }else if(u8CurrentState == 2) /* Gamelay Time!! */
+  }else if(u8CurrentState == 2) /* Gamelay Time!! ------------------------------------------------- */
   {
     //Timer Functions
     u32GameTimer++;
@@ -360,15 +422,18 @@ static void UserApp1SM_Idle(void)
       //Write score, life information maybe game speed?
       
      bDisplayUpdate = FALSE; 
-    } /* END OF GENERATE DISPLAY */
+    }                       /* END OF GENERATE DISPLAY */
     
     if((u32GameTimer % 200) == 0||u32GameTimer < 5)/* Attempt to generate a rock */
     {
-      rockSelector();  
-    }
+      rockSelector(&abDoesRockExist, sRockObject0, sRockObject1, sRockObject2, sRockObject3, sRockObject4,
+                                    sRockObject5, sRockObject6, sRockObject7, sRockObject8, sRockObject9);  
+    }/* End of rock generation */
     
+    rockActiveCheck(&abDoesRockExist, sRockObject0, sRockObject1, sRockObject2, sRockObject3, sRockObject4,
+                                     sRockObject5, sRockObject6, sRockObject7, sRockObject8, sRockObject9);
     
-    
+    /* END OF ACTIVE GAMEPLAY */
   }else if(u8CurrentState == 3) /* Update High Score and pass back to S0 */
   {
     if(u16CurrentScore > u16HighScore)
