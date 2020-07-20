@@ -192,10 +192,15 @@ static void rockInitializer(tRockObject sTargetRock)
   if(u8StartingSide == 0)       //Start on TOP
   {
     sTargetRock.u8Direction  = ((rand() % 7) + 5);
-      
+    sTargetRock.u8YPosition = 0;
+    sTargetRock.u8XPosition = (rand() % (127 - sTargetRock.u8Size));
+    
+    
   }else if(u8StartingSide == 1) //Start on LEFT
   {
     sTargetRock.u8Direction  = ((rand() % 7) + 9);
+    sTargetRock.u8XPosition = 0;
+    sTargetRock.u8YPosition = (rand() % (63 - sTargetRock.u8Size));
     
   }else if(u8StartingSide == 2) //Start on BOTTOM
   {
@@ -204,10 +209,15 @@ static void rockInitializer(tRockObject sTargetRock)
     if(u8Temp > 15)
       u8Temp -= 16;
     sTargetRock.u8Direction = u8Temp;
+    sTargetRock.u8YPosition = (63 - sTargetRock.u8Size);
+    sTargetRock.u8XPositon = (rand() % (127 - sTargetRock.u8Size));
     
   }else                         //Start on RIGHT
   {
     sTargetRock.u8Direction  = ((rand() % 7) + 1);
+    sTargetRock.u8XPosition = (127 - sTargetRock.u8Size);
+    sTargetRock.u8YPosition = (rand() % (63 - sTargetRock.u8Size));
+    
   }/* End of diretion selector */
   
   if(sTargetRock.u8Direction == 0)
@@ -287,6 +297,7 @@ static void UserApp1SM_Idle(void)
   
   //Object Declarations
   static tPlayerObject sPlayer;
+  
   static tRockObject sRockObject0;
   sRockObject0.u8Size = 5;
   sRockObject0.fSpeedFactor = 0.5;
@@ -365,7 +376,7 @@ static void UserApp1SM_Idle(void)
         LcdSetPixel(&sTargetPixel);
         sTargetPixel.u16PixelColumnAddress = i;
       }
-      for(i = 4; i < 127; i++)
+      for(i = 4; i < 124; i++)
       {
         sTargetPixel.u16PixelColumnAddress = 3;
         LcdSetPixel(&sTargetPixel);
@@ -430,9 +441,13 @@ static void UserApp1SM_Idle(void)
                                     sRockObject5, sRockObject6, sRockObject7, sRockObject8, sRockObject9);  
     }/* End of rock generation */
     
-    rockActiveCheck(&abDoesRockExist, sRockObject0, sRockObject1, sRockObject2, sRockObject3, sRockObject4,
+    if(u32GameTimer % 30 == 0)/* Check if rocks exist - if they do, move them. */
+    {
+      rockActiveCheck(&abDoesRockExist, sRockObject0, sRockObject1, sRockObject2, sRockObject3, sRockObject4,
                                      sRockObject5, sRockObject6, sRockObject7, sRockObject8, sRockObject9);
-    
+    }
+      
+      
     /* END OF ACTIVE GAMEPLAY */
   }else if(u8CurrentState == 3) /* Update High Score and pass back to S0 */
   {
